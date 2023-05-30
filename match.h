@@ -10,11 +10,13 @@
 
 class Match
 {
+    int currentPlayer = 1; // establece que el primero en jugar es el Player1
+    int turnCount = 1; // establece la cuenta de turnos en 1 al iniciar el juego
     // metodos de la clase
     public:
         // constructores
         Match() = default; // constructor por omision
-        Match(const int &currentPlayer, const int &turnCount);
+        Match(const int &, const int &);
 
         // destructor
         ~Match();
@@ -23,10 +25,17 @@ class Match
         void start();
 };
 
-void start()
+Match::Match(const int &currentPlayer, const int &turnCount)
 {
-    int currentPlayer = 1; // establece que el primero en jugar es el Player1
-    int turnCount = 1; // establece la cuenta de turnos en 1 al iniciar el juego
+    this->currentPlayer = currentPlayer; 
+    this->turnCount = turnCount; 
+}
+
+Match::~Match(){}
+
+void Match::start()
+{
+
     int tiles;
     int snakes;
     int ladders;
@@ -54,5 +63,4 @@ void start()
     std::cout << "Indicate the game type A <automatic>, M <manual>: ";
     std::cin >> gameType;
 
-    
 }

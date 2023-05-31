@@ -62,5 +62,5 @@ void Player::setPosition(int newPosition)
 // imprime en pantalla la cantidad de jugadores
 void Player::printPlayer()
 {
-    std::cout << player << position <<"\n";
+    std::cout << player << position;
 }

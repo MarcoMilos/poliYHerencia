@@ -6,10 +6,12 @@
 #include <string>
 #include <iostream>
 #include "dice.h"
+// #include "board.h"
 #pragma once
 
 class Match
 {
+    // atributos privados de la clase
     int currentPlayer = 1; // establece que el primero en jugar es el Player1
     int turnCount = 1; // establece la cuenta de turnos en 1 al iniciar el juego
     // metodos de la clase

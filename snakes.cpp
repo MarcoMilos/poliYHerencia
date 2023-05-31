@@ -2,8 +2,6 @@
 // 29-05-2023
 // Polimorfismo y Herencia - POO
 
-#include "board.h"
-#include "dice.h"
 #include "match.h"
 
 int main()

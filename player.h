@@ -3,64 +3,52 @@
 // Polimorfismo y Herencia - POO
 
 #include <iostream>
-#pragma once // compila la clase una sola vez
+#include <vector>
+#include "person.h"
+#pragma once 
 
-class Player
+class Player : public Person // establecemos que la clase "Player" hereda de forma publica a la clase "Person"
 {
-    // atributos privados de la clase
-    int player = 1; // asignamos al valor por omision como el "player 1"
-    int position = 1;
+    // atributos de clase
+    int player;
+    int position;
+    
+    public:
+        // constructores
+        Player() = default; // construtctor por omision
+        Player(const std::string &name) : Person(name) {}; // establecemos un constructor que conecte la clase "Player" con la "Person"
+        Player(const int &player, const int &position) : player(player), position(position) {};
 
-public:
-    // Constructores
-    Player() = default; // constructor por omision 
-    Player(const int &, const int &);
-    // Destructor
-    ~Player();
-    // Getter
-    const int &getPlayer();
-    const int &getPosition();
-    // Setter
-    void setPlayer(const int &);
-    void setPosition(const int);
-    // Metodo que imprime los jugadores
-    void printPlayer();
+        // destructor
+        ~Player();
+
+        // setters
+        void setPlayer(int player);
+        void setPosition(int position);
+
+        // getters
+        const int getPlayer();
+        const int getPosition();
 };
 
-// constructor que recibe un parametro
-Player::Player(const int &player, const int &position)
-{
-    this->player = player;
-    this->position = position;
-}
-
-// destructor
 Player::~Player() {}
 
-// getter de players
-const int &Player::getPlayer()
+const int Player::getPlayer()
 {
     return player;
 }
-// getter de posicion
-const int &Player::getPosition()
+
+void Player::setPlayer(int player)
+{
+    this->player = player; // establecemos el nuevo nombre del jugador
+}
+
+const int Player::getPosition()
 {
     return position;
 }
 
-// setter de players
-void Player::setPlayer(const int &player)
-{ // establecemos el nuevo valor de los players 
-    this->player = player;
-}
-// setter de posicion
 void Player::setPosition(int newPosition)
-{ // indica la nueva posicion en la que estara el "player" despues de hacer su jugada y moverse las casillas que indico el dado
-    position = newPosition;
-}
-
-// imprime en pantalla la cantidad de jugadores
-void Player::printPlayer()
 {
-    std::cout << player << position;
+    position = newPosition; // imprime la nueva posicion del jugador
 }

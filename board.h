@@ -128,5 +128,4 @@ void Board::print()
         tile->print();
         std::cout << " ";
     }
-    std::cout << std::endl;
 }

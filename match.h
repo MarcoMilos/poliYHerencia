@@ -38,9 +38,9 @@ Match::~Match(){}
 void Match::start()
 {
 
-    int tiles;
-    int snakes;
-    int ladders;
+    // int tiles;
+    // int snakes;
+    // int ladders;
     int penalty;
     int reward;
     int players;
@@ -48,12 +48,12 @@ void Match::start()
     std::string gameType;
 
     // solicito la cantidad de casillas, serpientes y escaleras desea tener el jugador en su partida
-    std::cout << "Indicate the amount of tiles you wish to have: ";
-    std::cin >> tiles;
-    std::cout << "Indicate the amount of snakes you wish to have: ";
-    std::cin >> snakes;
-    std::cout << "Indicate the amount of ladders you wish to have: ";
-    std::cin >> ladders;
+    // std::cout << "Indicate the amount of tiles you wish to have: ";
+    // std::cin >> tiles;
+    // std::cout << "Indicate the amount of snakes you wish to have: ";
+    // std::cin >> snakes;
+    // std::cout << "Indicate the amount of ladders you wish to have: ";
+    // std::cin >> ladders;
     std::cout << "Indicate the amount of tiles you will be punished with after falling in a snake tile: ";
     std::cin >> penalty;
     std::cout << "Indicate the amount of tiles you will be rewarded with after falling in a ladder tile: ";

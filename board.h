@@ -45,13 +45,6 @@ class Board
 
 Board::Board(int tiles, int snakes, int ladders) : tiles(tiles), snakes(snakes), ladders(ladders)
 {
-    std::cout << "Indicate the amount of tiles you wish to have: ";
-    std::cin >> tiles;
-    std::cout << "Indicate the amount of snakes you wish to have: ";
-    std::cin >> snakes;
-    std::cout << "Indicate the amount of ladders you wish to have: ";
-    std::cin >> ladders;
-
     createBoard();
 }
 
@@ -124,6 +117,12 @@ void Board::createBoard()
 
 void Board::print()
 {
+    std::cout << "Indicate the amount of tiles you wish to have: ";
+    std::cin >> tiles;
+    std::cout << "Indicate the amount of snakes you wish to have: ";
+    std::cin >> snakes;
+    std::cout << "Indicate the amount of ladders you wish to have: ";
+    std::cin >> ladders;
     for (Tile* tile : boardTiles)
     {
         tile->print();

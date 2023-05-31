@@ -2,11 +2,11 @@
 // 29-05-2023
 // Polimorfismo y Herencia - POO
 
-#include <cstdlib>
 #include <string>
 #include <iostream>
 #include "dice.h"
-// #include "board.h"
+#include "board.h"
+#include "player.h"
 #pragma once
 
 class Match

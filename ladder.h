@@ -4,11 +4,10 @@
 
 #include <iostream>
 #include <cstdlib> // sirve para llamar a la funcion rand()
-#include "match.h"
-#pragma once // compila la clase una sola vez
+#include "tile.h"
+#pragma once
 
-class Board 
+class Ladder : public Tile
 {
-        
-};
 
+};

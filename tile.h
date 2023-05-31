@@ -8,7 +8,7 @@
 class Tile
 {
     int tileValue = 30;
-    char tileType = 'N'; // Variable para declarar el tipo de casilla en la que pueden caer los jugadores
+    char tileType; // Variable para declarar el tipo de casilla en la que pueden caer los jugadores
     // metodos de clase
     public: 
         // atributos de clase de tipo publico
@@ -62,5 +62,5 @@ const char &Tile::getType()
 
 void Tile::print()
 {
-    std::cout << tileType << getType();
+    std::cout << 'N' << getType();
 }

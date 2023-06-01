@@ -2,24 +2,32 @@
 // 29-05-2023
 // Polimorfismo y Herencia - POO
 
-#include <string>
 #include <iostream>
-#include "dice.h"
+#include <vector>
+#include <ctime> // Se incluye para generar una semilla unica para la funcion rand()
 #include "board.h"
+#include "dice.h"
 #include "player.h"
-#pragma once
 
 class Match
 {
-    // atributos privados de la clase
-    int currentPlayer = 1; // establece que el primero en jugar es el Player1
-    int turnCount = 1; // establece la cuenta de turnos en 1 al iniciar el juego
-    // metodos de la clase
+    // atributos de clase
+    int penalty; // establece las penalizaciones por caer en casilla serpiente
+    int reward; // establece las recompensas por caer en casilla escalera
+    int players; // establece la cantidad de jugadores en la partida
+    int turns; // establece la cantidad de turnos maximos permitidos
+    std::string gameType; // establece el tipo de juego <automatico> o <manual>
+    std::vector<Player> playerList; // lista de jugadores
+
+    // metodos privados 
+    void setupPlayers();
+    void playTurn(Player &player);
+    void printWinner(Player &player);
+
     public:
         // constructores
         Match() = default; // constructor por omision
-        Match(const int &, const int &);
-
+        
         // destructor
         ~Match();
 
@@ -27,65 +35,106 @@ class Match
         void start();
 };
 
-Match::Match(const int &currentPlayer, const int &turnCount)
-{
-    this->currentPlayer = currentPlayer; 
-    this->turnCount = turnCount; 
+Match::Match()
+{ // establecemos los valores por omision en "0"
+    penalty = 0;
+    reward = 0;
+    players = 0;
+    turns = 0;
+    gameType = "";
 }
 
-Match::~Match(){}
+Match::~Match() {}
+
+void Match::setupPlayers()
+{
+    std::string playerName;
+    for (int i = 0; i < players; i++)
+    {
+        std::cout << "Enter the name of Player " << i + 1 << ": ";
+        std::cin >> playerName;
+        playerList.push_back(Player(playerName));
+    }
+}
+
+void Match::playTurn(Player &player)
+{
+    int diceRoll = Dice::roll();
+    int newPosition = player.getPosition() + diceRoll;
+    Tile* currentTile = board.getTiles(newPosition);
+
+    if (newPosition >= board.getTiles())
+    {
+        newPosition = board.getTiles() - 1;
+        player.setPosition(newPosition);
+        printWinner(player);
+        return;
+    }
+
+    if (currentTile->getType() == 'S')
+    {
+        newPosition -= penalty;
+    } else if (currentTile->getType() == 'L')
+    {
+        newPosition += reward;
+    }
+
+    player.setPosition(newPosition);
+}
+
+void Match::printWinner(Player &player)
+{
+    std::cout << "--- GAME OVER ---" << std::endl;
+    std::cout << "Player: " << player.getName() << " is the winner!!" << std::endl;
+}
 
 void Match::start()
 {
+    srand(time(nullptr)); // generamos una semilla unica para la funcion rand()
+
     Board b0;
     b0.print();
-    // int tiles;
-    // int snakes;
-    // int ladders;
-    int penalty;
-    int reward;
-    int players;
-    int turns;
-    std::string gameType;
 
-    // solicito la cantidad de casillas, serpientes y escaleras desea tener el jugador en su partida
-    // std::cout << "Indicate the amount of tiles you wish to have: ";
-    // std::cin >> tiles;
-    // std::cout << "Indicate the amount of snakes you wish to have: ";
-    // std::cin >> snakes;
-    // std::cout << "Indicate the amount of ladders you wish to have: ";
-    // std::cin >> ladders;
-    std::cout << "Indicate the amount of tiles you will be punished with after falling in a snake tile: ";
+    std::cout << "Indicate the amount of tiles you will be penalized with after falling on a snake tile: ";
     std::cin >> penalty;
-    std::cout << "Indicate the amount of tiles you will be rewarded with after falling in a ladder tile: ";
+
+    std::cout << "Indicate the amount of tiles you will be rewarded with after falling on a ladder tile: ";
     std::cin >> reward;
+
     std::cout << "Indicate the amount of players in the match: ";
     std::cin >> players;
-    std::cout << "Indicate the maximum amount of turns for the game: ";
-    std::cin >> turns;
-    std::cout << "Indicate the game type A <automatic>, M <manual>: ";
+    setupPlayers();
+
+    std::cout << "Indicate the game type A <automatic> M <manual>: ";
     std::cin >> gameType;
 
-//     if (gameType == "A")
-//     {
-//         Player p0;
-//         int diceResult = Dice::roll();
+    std::cout << "Starting game...." << std::endl;
 
-//         int currentPosition;
-//         if (currentPlayer == 1)
-//             p0.printPlayer();
+    for (int i = 1; i <= players; i++)
+    {
+        playerList.push_back(Player(i, 1));
+    }
 
-//         char tileType; // Variable para declarar el tipo de casilla en la que pueden caer los jugadores
-//         int nextPosition; // Variable para declarar la siguiente posición en la que estarán los jugadores tras tomar su turno
+    do
+    {
+        // selecciona si el juego comienza de manera automática o manual
+        if (gameType == "M" or gameType == "m")
+        {
+            std::cout << "\nPress C to continue next turn, or E to end the game: " << std::endl;
+            std::string input;
+            std::cin >> input;
 
-//         if (currentPosition + diceResult > tiles) // Declara que si la "posición actual" y el "resultado del dado" es MAYOR a 30, enviará el siguiente mensaje
-//         {
-//             std::cout << "Invalid move! Try Again." << std::endl;
-//         }
-//         // Se manda a desplegar el turno, jugador actual, posición actual, resultado del dado, tipo de casilla y siguiente posición:
-//         std::cout << " " << turnCount << " " << currentPlayer << " " << currentPosition << " " << diceResult << " " << tileType << " " << nextPosition << std::endl;
+            while (input != "E") // Establecemos que -mientras la respuesta no sea "E" (exit)- el juego empiece/siga
+            {
+                Match m3;
+                m3.playTurn(Player &player);
+            }
+        else if (gameType == "A" or gameType == "a")
+        {
 
-//         currentPlayer = (currentPlayer == 1) ? 2 : 1;
-//         turnCount++; // se suman los turnos conforme van pasando y participando cada jugador
-//     }
+        }
+    } while (/* condition */);
+    
+    
+    
 }

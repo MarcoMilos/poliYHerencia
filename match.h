@@ -115,26 +115,21 @@ void Match::start()
         playerList.push_back(Player(i, 1));
     }
 
-    do
+    // selecciona si el juego comienza de manera automática o manual
+    if (gameType == "M" or gameType == "m")
     {
-        // selecciona si el juego comienza de manera automática o manual
-        if (gameType == "M" or gameType == "m")
-        {
-            std::cout << "\nPress C to continue next turn, or E to end the game: " << std::endl;
-            std::string input;
-            std::cin >> input;
+        std::cout << "\nPress C to continue next turn, or E to end the game: " << std::endl;
+        std::string input;
+        std::cin >> input;
 
-            while (input != "E") // Establecemos que -mientras la respuesta no sea "E" (exit)- el juego empiece/siga
-            {
-                Match m3;
-                m3.playTurn(Player &player);
-            }
-        else if (gameType == "A" or gameType == "a")
+        while (input != "E") // Establecemos que -mientras la respuesta no sea "E" (exit)- el juego empiece/siga
         {
-
-        }
-    } while (/* condition */);
-    
-    
-    
+            Match m3;
+            m3.playTurn();
+        }  
+    } else if (gameType == "A" or gameType == "a") {
+        Match m3;
+        m3.playTurn();
+    }   
 }
+

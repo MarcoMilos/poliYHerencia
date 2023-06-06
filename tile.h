@@ -56,5 +56,5 @@ char Tile::getType()
 
 void Tile::print()
 {
-    std::cout << tileValue << tileType << getType();
+    std::cout << tileValue << tileType << std::endl;
 }

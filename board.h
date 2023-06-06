@@ -70,13 +70,25 @@ Board::Board(const int& tiles, const int& snakes, const int& ladders, const int&
             tile = dice.customRoll(penalty, tiles - 1);
         } while (boardTiles[tile]->getType() == 'S' || boardTiles[tile]->getType() == 'L');
         boardTiles.erase(boardTiles.begin() + tile); // elimina la casilla normal
-        boardTiles.insert(boardTiles.begin() + tile, new Ladder('L', tile));
+        boardTiles.insert(boardTiles.begin() + tile, new Snake('S', tile));
     }
 
+    for(int i = 0; i < ladders; i++)
+    {
+        int tile;
+        do
+        {
+            tile = dice.customRoll(1, tiles - reward - 1);
+        } while (boardTiles[tile]->getType() == 'S' || boardTiles[tile]->getType() == 'L');
+        boardTiles.erase(boardTiles.begin() + tile);
+        boardTiles.insert(boardTiles.begin() + tile, new Ladder('L', tile));
+    }
+    
     for(int i = 0; i < tiles; i++)
     {
         boardTiles[i]->print();
     }
+
 }
 
 Board::Board(const int& tiles, const int& snakes, const int& ladders, const std::vector<Tile *> boardTiles)

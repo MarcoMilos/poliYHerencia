@@ -26,8 +26,8 @@ class Player : public Person // establecemos que la clase "Player" hereda de for
         void setPosition(int position);
 
         // getters
-        const int getPlayer();
-        const int getPosition();
+        int getPlayer();
+        int getPosition();
 
         // print player
         void printPlayer();
@@ -36,7 +36,7 @@ class Player : public Person // establecemos que la clase "Player" hereda de for
 
 Player::~Player() {}
 
-const int Player::getPlayer()
+int Player::getPlayer()
 {
     return player;
 }
@@ -46,7 +46,7 @@ void Player::setPlayer(int player)
     this->player = player; // establecemos el nuevo nombre del jugador
 }
 
-const int Player::getPosition()
+int Player::getPosition()
 {
     return position;
 }

@@ -14,8 +14,8 @@ class Tile
         // atributos de clase de tipo publico
 
         // constructores
-        Tile() = default; // constructor por omision
-        Tile(const int &, const char &) : tileType(tileType), tileValue(tileValue){};
+        Tile() {}; // constructor por omision
+        Tile(const int &tileValue, const char &tileType) : tileValue(tileValue), tileType(tileType){};
 
         // destructor
         ~Tile(); 
@@ -34,12 +34,12 @@ class Tile
 
 Tile::~Tile(){}
 
-void Tile::setValue(const int tileValue)
+void Tile::setValue(int tileValue)
 {
     this->tileValue = tileValue;
 }
 
-void Tile::setType(const char tileType)
+void Tile::setType(char tileType)
 {
     this->tileType = tileType;
 }

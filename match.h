@@ -4,10 +4,14 @@
 
 #include <iostream>
 #include <vector>
-#include <ctime> // Se incluye para generar una semilla unica para la funcion rand()
+#include <string>
 #include "board.h"
+#include "tile.h"
+#include "snake.h"
+#include "ladder.h"
 #include "dice.h"
 #include "player.h"
+#include "turn.h"
 #pragma once
 
 class Match
@@ -29,7 +33,7 @@ class Match
     std::vector<Player> players;
     public:
         // constructores
-        Match() = default; // constructor por omision
+        Match(); // constructor por omision
         
         // destructor
         ~Match();
@@ -103,106 +107,79 @@ void Match::playTurn(Board currentBoard)
     {
         if(playing.getPosition() <= T)
         {
-            
+            std::cout << Turn(turnCount, playing.getPlayer(), rolled, currentTileType, playing.getPosition()) << std::endl;
+        }
+        else
+        {
+            std::cout << Turn(turnCount, playing.getPlayer(), rolled, 'N', 30) << std::endl;
+            std::cout << "Player: " << playing.getPlayer() << " is the winner!!" << std::endl;
+            end = true;
         }
     }
+    else if(currentTileType == 'S')
+    {
+        std::cout << Turn(turnCount, playing.getPlayer(), rolled, currentTileType, playing + P) << std::endl;
+        playing.setPosition(playing.getPosition() - P);
+    }
+    else
+    {
+        std::cout << Turn(turnCount, playing.getPlayer(), rolled, currentTileType, playing + R) << std::endl;
+        playing.setPosition(playing.getPosition() + R);
+    }
+
+    turnCount++;
+    if(turnCount >= TRN)
+    {
+        std::cout << "Exceeded the maximum number of turns!!" << std::endl;
+        end = true;
+    }
 }
-// Match::Match()
-// { // establecemos los valores por omision en "0"
-//     penalty = 0;
-//     reward = 0;
-//     players = 0;
-//     turns = 0;
-//     gameType = "";
-//     Board board;
-// }
 
-// Match::~Match(){}
+void Match::start()
+{
+    gameSetter();
+    if(!validGame()) {return;}
+    srand(time(NULL));
+    Board board(T, S, L, P, R);
+    for(int i = 0; i < PLRS; i++)
+    {
+        std::string username;
+        std::cout << "Enter the name of the player " << i + 1 << ": " << std::endl;
+        std::cin >> username;
+        players.push_back(Player(username, i + 1));
+    }
 
-// void Match::setupPlayers()
-// {
-//     std::string playerName;
-//     for (int i = 0; i < players; i++)
-//     {
-//         std::cout << "Enter the name of Player " << i + 1 << ": ";
-//         std::cin >> playerName;
-//         playerList.push_back(Player(playerName));
-//     }
-// }
-
-// void Match::playTurn(Player &player)
-// {
-//     int diceRoll = Dice::roll();
-//     int newPosition = player.getPosition() + diceRoll;
-//     Tile* currentTile = board.getTiles(newPosition);
-
-//     if (newPosition >= board.getTiles())
-//     {
-//         newPosition = board.getTiles() - 1;
-//         player.setPosition(newPosition);
-//         printWinner(player);
-//         return;
-//     }
-
-//     if (currentTile->getType() == 'S')
-//     {
-//         newPosition -= penalty;
-//     } else if (currentTile->getType() == 'L')
-//     {
-//         newPosition += reward;
-//     }
-
-//     player.setPosition(newPosition);
-// }
-
-// void Match::printWinner(Player &player)
-// {
-//     std::cout << "--- GAME OVER ---" << std::endl;
-//     std::cout << "Player: " << player.getName() << " is the winner!!" << std::endl;
-// }
-
-// void Match::start()
-// {
-//     srand(time(nullptr)); // generamos una semilla unica para la funcion rand()
-
-//     Board b0;
-//     b0.print();
-
-//     std::cout << "Indicate the amount of tiles you will be penalized with after falling on a snake tile: ";
-//     std::cin >> penalty;
-
-//     std::cout << "Indicate the amount of tiles you will be rewarded with after falling on a ladder tile: ";
-//     std::cin >> reward;
-
-//     std::cout << "Indicate the amount of players in the match: ";
-//     std::cin >> players;
-//     setupPlayers();
-
-//     std::cout << "Indicate the game type A <automatic> M <manual>: ";
-//     std::cin >> gameType;
-
-//     std::cout << "Starting game...." << std::endl;
-
-//     for (int i = 1; i <= players; i++)
-//     {
-//         playerList.push_back(Player(i, 1));
-//     }
-
-//     // selecciona si el juego comienza de manera automática o manual
-//     if (gameType == "M" or gameType == "m")
-//     {
-//         std::cout << "\nPress C to continue next turn, or E to end the game: " << std::endl;
-//         std::string input;
-//         std::cin >> input;
-
-//         while (input != "E") // Establecemos que -mientras la respuesta no sea "E" (exit)- el juego empiece/siga
-//         {
-//             Match m3;
-//             m3.playTurn(playerList[0]);
-//         }  
-//     } else if (gameType == "A" or gameType == "a") {
-//         Match m3;
-//         m3.playTurn(playerList[0]);
-//     }   
-// }
-
+    if (GM == 'M')
+    {
+        char input;
+        std::cout << "Welcome to the game!\nPlease enter C to continue next turn, or E to end the game: " << std::endl;
+        while (!end)
+        {
+            std::cin >> input;
+            while(input != 'C' && input != 'E')
+            {
+                std::cout << "Invalid option, please try pressing C to continue next turn or E to exit the game." << std::endl;
+                std::cin >> input;
+            }
+            if(input == 'C')
+            {
+                playTurn(board);
+            }
+            else
+            {
+                std::cout << "Thanks for playing!!" << std::endl;
+                break;
+            }
+        }
+        std::cout << "--- GAME OVER ---" << std::endl;
+    }
+    else
+    {
+        while(!end)
+        {
+            playTurn(board);
+        }
+        std::cout << "--- GAME OVER ---" << std::endl;
+        
+    }
+}

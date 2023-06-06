@@ -18,7 +18,7 @@ class Turn
     public:
         // constructores
         Turn() = default;
-        Turn(const int& turnCount, const int& playerCount, const int& rolled, const char& tiletype, const int& playerDespawn) : turnCount(turnCount + 1), playerCount(playerCount), playerSpawn(playerDespawn - rolled + 1), rolled(rolled), tileType(tileType), playerDespawn(playerDespawn + 1) {}
+        Turn(const int& turnCount, const int& playerCount, const int& rolled, const char& tileType, const int& playerDespawn) : turnCount(turnCount + 1), playerCount(playerCount), playerSpawn(playerDespawn - rolled + 1), rolled(rolled), tileType(tileType), playerDespawn(playerDespawn + 1) {}
         
         // destructor
         ~Turn();

@@ -8,124 +8,130 @@
 #include "tile.h"
 #include "snake.h"
 #include "ladder.h"
+#include "dice.h"
 #pragma once // compila la clase una sola vez
 
 class Board 
 {
     // atributos de clase
-    int tiles = 0; // cantidad de casillas por omision
-    int snakes = 0; // cantidad de serpientes por omision
-    int ladders = 0; // cantidad de escaleras por omision
+    Dice dice;
+    int tiles; // cantidad de casillas por omision
+    int snakes; // cantidad de serpientes por omision
+    int ladders; // cantidad de escaleras por omision
+    int penalty; // cantidad de casillas de castigo por caer en casilla de tipo serpiente
+    int reward; // cantidad de casillas de recompensa por caer en casilla de tipo escalera
     std::vector<Tile *> boardTiles;
     
     public:
         // constructores
         Board() = default; // constructor por omision
-        Board(int tiles, int snakes, int ladders); // constructor por definicion
+        Board(const int&, const int&, const int&, const int&, const int&); // v1 constructor por argumentos
+        Board(const int&, const int&, const int&, const std::vector<Tile *>); // v2 constructor por argumentos
 
         // destructor
         ~Board();
 
         // setters
-        void setTiles(int tiles);
-        void setSnakes(int snakes);
-        void setLadders(int ladders);
+        void setTiles_(int);
+        void setSnakes(int);
+        void setLadders(int);
+        void setPenalty(int);
+        void setReward(int);
+        void setTiles(std::vector<Tile *>);
 
         // getters
-        const int getTiles();
-        const int getSnakes();
-        const int getLadders();
+        int getTiles_();
+        int getSnakes();
+        int getLadders();
+        int getReward();
+        int getPenalty();
+        std::vector<Tile *> getTiles();
 
-        // metodo para crear el tablero
-        void createBoard();
-
-        // metodo para imprimir el tablero
-        virtual void print();
 };
 
-Board::Board(int tiles, int snakes, int ladders) : tiles(tiles), snakes(snakes), ladders(ladders)
+Board::Board(const int& tiles, const int& snakes, const int& ladders, const int& penalty, const int& reward)
 {
-    createBoard();
-}
-
-Board::~Board()
-{ 
-    for (Tile* tile : boardTiles)
+    this->tiles = tiles;
+    this->snakes = snakes;
+    this->ladders = ladders;
+    this->penalty = penalty;
+    this->reward = reward;
+    srand(time(NULL));
+    for(int i = 0; i < tiles; i++)
     {
-        delete tile;
+        boardTiles.push_back(new Tile('N', i));
+    }
+
+    for(int i = 0; i < snakes; i++) 
+    {
+        int tile;
+        do
+        {
+            tile = dice.customRoll(penalty, tiles - 1);
+        } while (boardTiles[tile]->getType() == 'S' || boardTiles[tile]->getType() == 'L');
+        boardTiles.erase(boardTiles.begin() + tile); // elimina la casilla normal
+        boardTiles.insert(boardTiles.begin() + tile, new Ladder('L', tile));
+    }
+
+    for(int i = 0; i < tiles; i++)
+    {
+        boardTiles[i]->print();
     }
 }
 
-void Board::setTiles(int tiles)
+Board::Board(const int& tiles, const int& snakes, const int& ladders, const std::vector<Tile *> boardTiles)
+{
+    this->tiles = tiles;
+    this->snakes = snakes;
+    this->ladders = ladders;
+    this->boardTiles = boardTiles;
+}
+
+Board::~Board(){}
+
+int Board::getTiles_()
+{
+    return tiles;
+}
+int Board::getSnakes()
+{
+    return snakes;
+}
+int Board::getLadders()
+{
+    return ladders;
+}
+int Board::getPenalty()
+{
+    return penalty;
+}
+int Board::getReward()
+{
+    return reward;
+}
+
+std::vector<Tile *> Board::getTiles()
+{
+    return boardTiles;
+}
+
+void Board::setTiles_(int tiles)
 {
     this->tiles = tiles;
 }
-
 void Board::setSnakes(int snakes)
 {
     this->snakes = snakes;
 }
-
 void Board::setLadders(int ladders)
 {
     this->ladders = ladders;
 }
-
-const int Board::getTiles()
+void Board::setPenalty(int penalty)
 {
-    return tiles;
+    this->penalty = penalty;
 }
-
-const int Board::getSnakes()
+void Board::setReward(int reward)
 {
-    return snakes;
-}
-
-const int Board::getLadders()
-{
-    return ladders;
-}
-
-void Board::createBoard()
-{
-    // eliminar la configuracion previa del tablero
-    boardTiles.clear();
-
-    // creamos las casillas normales
-    for (int i = 0; i < tiles; i++)
-    {
-        Tile* tile = new Tile(i, 'N');
-        boardTiles.push_back(tile);
-    }
-
-    // creamos las casillas de tipo serpiente
-    for (int i = 0; i < snakes; i++)
-    {
-        int randomTile = rand() % tiles;
-        Tile* snake = new Snake(randomTile, 'S');
-        boardTiles[randomTile] = snake;
-    }
-
-    // creamos las casillas de tipo escalera
-    for (int i = 0; i < ladders; i++)
-    {
-        int randomTile = rand() % tiles;
-        Tile* ladder = new Ladder(randomTile, 'L');
-        boardTiles[randomTile] = ladder;
-    }
-}
-
-void Board::print()
-{
-    std::cout << "Indicate the amount of tiles you wish to have: ";
-    std::cin >> tiles;
-    std::cout << "Indicate the amount of snakes you wish to have: ";
-    std::cin >> snakes;
-    std::cout << "Indicate the amount of ladders you wish to have: ";
-    std::cin >> ladders;
-    for (Tile* tile : boardTiles)
-    {
-        tile->print();
-        std::cout << " ";
-    }
+    this->reward = reward;
 }

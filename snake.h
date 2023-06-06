@@ -17,14 +17,6 @@ class Snake : public Tile
 
         // destructor
         ~Snake();
-
-        // metodo de impresion
-        void print();
 };
 
 Snake::~Snake(){}
-
-void Snake::print()
-{
-    std::cout << 'S' << getType();
-}

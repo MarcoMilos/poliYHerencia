@@ -16,8 +16,7 @@ class Player : public Person // establecemos que la clase "Player" hereda de for
     public:
         // constructores
         Player() = default; // construtctor por omision
-        Player(const std::string &name) : Person(name) {}; // establecemos un constructor que conecte la clase "Player" con la "Person"
-        Player(const int &player, const int &position) : player(player), position(position) {};
+        Player(const std::string &name, const int &player) : Person(name), player(player) {position = 0;}
 
         // destructor
         ~Player();
@@ -29,6 +28,10 @@ class Player : public Person // establecemos que la clase "Player" hereda de for
         // getters
         const int getPlayer();
         const int getPosition();
+
+        // print player
+        void printPlayer();
+        int operator+(int num) {return position + num;}
 };
 
 Player::~Player() {}
@@ -51,4 +54,9 @@ const int Player::getPosition()
 void Player::setPosition(int newPosition)
 {
     position = newPosition; // imprime la nueva posicion del jugador
+}
+
+void Player::printPlayer()
+{
+    std::cout << player << position << std::endl;
 }

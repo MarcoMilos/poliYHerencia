@@ -7,7 +7,7 @@
 
 class Tile
 {
-    int tileValue = 30;
+    int tileValue;
     char tileType; // Variable para declarar el tipo de casilla en la que pueden caer los jugadores
     // metodos de clase
     public: 
@@ -15,28 +15,22 @@ class Tile
 
         // constructores
         Tile() = default; // constructor por omision
-        Tile(const int &, const char &);
+        Tile(const int &, const char &) : tileType(tileType), tileValue(tileValue){};
 
         // destructor
         ~Tile(); 
 
         // setters
-        void setValue(const int tileValue);
-        void setType(const char tileType);
+        void setValue(int);
+        void setType(char);
 
         // getters 
-        const int &getValue();
-        const char &getType();
+        int getValue();
+        char getType();
 
         // printTile
-        virtual void print();
+        void print();
 };
-
-Tile::Tile(const int &tileValue, const char &tileType)
-{
-    this->tileValue = tileValue;
-    this->tileType = tileType;
-}
 
 Tile::~Tile(){}
 
@@ -50,17 +44,17 @@ void Tile::setType(const char tileType)
     this->tileType = tileType;
 }
 
-const int &Tile::getValue()
+int Tile::getValue()
 {
     return tileValue;
 }
 
-const char &Tile::getType()
+char Tile::getType()
 {
     return tileType;
 }
 
 void Tile::print()
 {
-    std::cout << 'N' << getType();
+    std::cout << tileValue << tileType << getType();
 }

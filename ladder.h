@@ -17,14 +17,6 @@ class Ladder : public Tile
 
         // destructor
         ~Ladder();
-
-        // metodo de impresion
-        void print();
 };
 
 Ladder::~Ladder(){}
-
-void Ladder::print()
-{
-    std::cout << 'L' << getType();
-}

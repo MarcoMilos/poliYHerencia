@@ -16,7 +16,5 @@ class Ladder : public Tile
         Ladder(const int &tileValue, const char &tileType) : Tile(tileValue, tileType) {}
 
         // destructor
-        ~Ladder();
+        ~Ladder(){};
 };
-
-Ladder::~Ladder(){}

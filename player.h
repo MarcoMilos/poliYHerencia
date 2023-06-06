@@ -22,8 +22,8 @@ class Player : public Person // establecemos que la clase "Player" hereda de for
         ~Player();
 
         // setters
-        void setPlayer(int player);
-        void setPosition(int position);
+        void setPlayer(int);
+        void setPosition(int);
 
         // getters
         int getPlayer();

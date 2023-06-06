@@ -16,7 +16,5 @@ class Snake : public Tile
         Snake(const int &tileValue, const char &tileType) : Tile(tileValue, tileType) {}
 
         // destructor
-        ~Snake();
+        ~Snake(){};
 };
-
-Snake::~Snake(){}

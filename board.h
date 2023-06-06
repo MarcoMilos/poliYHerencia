@@ -32,12 +32,12 @@ class Board
         ~Board();
 
         // setters
-        void setTiles_(int);
+        void setTiles(int);
         void setSnakes(int);
         void setLadders(int);
         void setPenalty(int);
         void setReward(int);
-        void setTiles(std::vector<Tile *>);
+        void setTiles_(std::vector<Tile *>);
 
         // getters
         int getTiles_();
@@ -115,9 +115,13 @@ std::vector<Tile *> Board::getTiles()
     return boardTiles;
 }
 
-void Board::setTiles_(int tiles)
+void Board::setTiles(int tiles)
 {
     this->tiles = tiles;
+}
+void Board::setTiles_(std::vector<Tile *> boardTiles)
+{
+    this->boardTiles = boardTiles;
 }
 void Board::setSnakes(int snakes)
 {

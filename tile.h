@@ -38,7 +38,6 @@ void Tile::setValue(int tileValue)
 {
     this->tileValue = tileValue;
 }
-
 void Tile::setType(char tileType)
 {
     this->tileType = tileType;
@@ -48,7 +47,6 @@ int Tile::getValue()
 {
     return tileValue;
 }
-
 char Tile::getType()
 {
     return tileType;

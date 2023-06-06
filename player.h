@@ -5,7 +5,6 @@
 #include <iostream>
 #include <vector>
 #include "person.h"
-#pragma once 
 
 class Player : public Person // establecemos que la clase "Player" hereda de forma publica a la clase "Person"
 {
@@ -15,7 +14,7 @@ class Player : public Person // establecemos que la clase "Player" hereda de for
     
     public:
         // constructores
-        Player() = default; // construtctor por omision
+        Player() {}; // construtctor por omision
         Player(const std::string &name, const int &player) : Person(name), player(player) {position = 0;}
 
         // destructor

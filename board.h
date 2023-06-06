@@ -3,7 +3,6 @@
 // Polimorfismo y Herencia - POO
 
 #include <iostream>
-#include <cstdlib> // sirve para llamar a la funcion rand()
 #include <vector>
 #include "tile.h"
 #include "snake.h"
@@ -21,7 +20,7 @@ class Board
     int penalty; // cantidad de casillas de castigo por caer en casilla de tipo serpiente
     int reward; // cantidad de casillas de recompensa por caer en casilla de tipo escalera
     std::vector<Tile *> boardTiles;
-    
+
     public:
         // constructores
         Board() = default; // constructor por omision
@@ -40,12 +39,12 @@ class Board
         void setTiles_(std::vector<Tile *>);
 
         // getters
-        int getTiles_();
+        int getTiles();
         int getSnakes();
         int getLadders();
         int getReward();
         int getPenalty();
-        std::vector<Tile *> getTiles();
+        std::vector<Tile *> getTiles_();
 
 };
 
@@ -101,7 +100,7 @@ Board::Board(const int& tiles, const int& snakes, const int& ladders, const std:
 
 Board::~Board(){}
 
-int Board::getTiles_()
+int Board::getTiles()
 {
     return tiles;
 }
@@ -122,7 +121,7 @@ int Board::getReward()
     return reward;
 }
 
-std::vector<Tile *> Board::getTiles()
+std::vector<Tile *> Board::getTiles_()
 {
     return boardTiles;
 }

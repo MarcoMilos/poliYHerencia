@@ -2,7 +2,9 @@
 // 29-05-2023
 // Polimorfismo y Herencia - POO
 
-#include <cstdlib> // sirve para llamar a la funcion rand()
+#include <iostream>
+#include <stdlib.h>
+#include <time.h>
 #pragma once
 
 // recomendado por Antonio Marbán

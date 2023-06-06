@@ -11,8 +11,6 @@ class Tile
     char tileType; // Variable para declarar el tipo de casilla en la que pueden caer los jugadores
     // metodos de clase
     public: 
-        // atributos de clase de tipo publico
-
         // constructores
         Tile() {}; // constructor por omision
         Tile(const int &tileValue, const char &tileType) : tileValue(tileValue), tileType(tileType){};

@@ -3,7 +3,6 @@
 // Polimorfismo y Herencia - POO
 
 #include <iostream>
-#include <cstdlib> // sirve para llamar a la funcion rand()
 #include "tile.h"
 #pragma once
 

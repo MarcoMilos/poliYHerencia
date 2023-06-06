@@ -23,7 +23,7 @@ class Match
     int P = -3; // castigo por caer en casilla de tipo serpiente
     int R = 3; // premio por caer en casilla de tipo escalera
     int PLRS = 2; // cantidad de jugadores
-    int TRN = 30; // cantidad máximo de turnos
+    int TRN = 60; // cantidad máximo de turnos
     char GM = 'A'; // Modalidad: 'A' <automático> / 'M' <manual>
 
     int turnCount = 0;
@@ -93,7 +93,7 @@ void Match::playTurn(Board currentBoard)
 
     playing.setPosition(playing.getPosition() + rolled);
 
-    Tile * currentTile = currentBoard.getTiles()[playing.getPosition()];
+    Tile * currentTile = currentBoard.getTiles_()[playing.getPosition()];
     Tile & tileObjct = * currentTile;
 
     char currentTileType = 'N';
